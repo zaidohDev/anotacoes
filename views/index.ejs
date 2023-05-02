@@ -1,24 +1,57 @@
-<!DOCTYPE html >
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Anotações</title>
   <link rel="stylesheet" type="text/css" href="style.css">
+  <script src=" script.js" defer></script>
 </head>
+
 <body>
-  <form action="/create" method="post">
-    <input type="text" name="task" id="task" placeholder="Insira uma tarefa">
-    <button type="submit" id="addButton">Adicionar</button>
-  </form>
-  
-     <ul>
-      <% taskList.forEach(task => {%>
-        <li><%= task.task %> | <%=task.date.toLocaleDateString('pt-BR')+", "+ task.date.toLocaleTimeString('pt-BR') %></li>
-      <% })%>
-     </ul>
- 
-<script src="script.js"></script> 
+  <header>
+
+    <% if (task==null) {%>
+      <form action="/create" method="post">
+        <input type="text" name="task" id="task" placeholder="Insira uma tarefa">
+        <button type="submit" class="addButton">Adicionar</button>
+      </form>
+      <% } else {%>
+
+        <form action="/updateOne/<%= task._id %>" method="post">
+          <input type="text" name="task" id="task" value="<%= task.task %>">
+          <button type="submit" class="addButton">Atualizar</button>
+        </form>
+        <% } %>
+  </header>
+  <section id="tasks">
+    <ul>
+      <% taskList.forEach(task=> {%>
+        <li>
+          <%= task.task %> |
+            <%=task.date.toLocaleDateString('pt-BR')+", "+ task.date.toLocaleTimeString('pt-BR') %> 
+             <a href=" /getById/<%=task._id %>/update">Editar</a>
+              <a href=" /getById/<%=task._id %>/delete">Apagar</a>
+        </li>
+        <%})%>
+    </ul>
+  </section>
+
+  <% if(deleteTask !=null) {%>
+    <section id="modal">
+      <div id="card">
+        <a href="/">X</a>
+        <hr>
+        <p>Deseja deletar a tarefa: <%=deleteTask.task %>?</p>
+        <a href="/">Não</a>
+        <a href="/deleteOne/<%= deleteTask._id %>">Sim</a>
+      </div>
+
+    </section>
+    <%}%>
+
 </body>
+
 </html>

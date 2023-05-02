@@ -13,6 +13,11 @@
     "ejs": "^3.1.9",
     "express": "^4.18.2",
     "mongoose": "^7.1.0",
+    "node": "^18.16.0",
     "nodemon": "^2.0.22"
+  },
+  "files.associations": {
+    "*.ejs": "html",
+    "*.js": "html"
   }
 }
